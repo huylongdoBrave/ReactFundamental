@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Wheel from './Wheel';
 import ResultPopup from './ResultPopup';
 import RateTablePopup from './RateTablePopup';
@@ -10,7 +10,7 @@ function WheelGame() {
   const [currentSpins, setCurrentSpins] = useState(5);
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotationAngle, setRotationAngle] = useState(0);
-  const [spinDuration, setSpinDuration] = useState(5); // Thời gian quay
+  const wheelRef = useRef(null); // Ref để tham chiếu đến DOM của vòng quay
 
   // State cho các popup
   const [isResultPopupOpen, setIsResultPopupOpen] = useState(false);
@@ -56,15 +56,6 @@ function WheelGame() {
     return () => document.body.classList.remove('body-no-scroll');
   }, []);
 
-  // Effect này sẽ chạy KHI isSpinning chuyển từ true -> false
-  // để reset vòng quay một cách an toàn.
-  useEffect(() => {
-    if (!isSpinning) {
-      const finalRotation = rotationAngle % 360;
-      setSpinDuration(0); // Tắt animation
-      setRotationAngle(finalRotation); // Đặt lại góc
-    }
-  }, [isSpinning]);
   // === HELPER FUNCTIONS ===
   const getWeightedRandomIndex = () => {
     const prizeProbabilities = prizes.map(p => p.probability);
@@ -85,30 +76,41 @@ function WheelGame() {
 
     setCurrentSpins(currentSpins - 1);
     setIsSpinning(true); // Báo hiệu bắt đầu quay, các nút sẽ bị vô hiệu hóa
-    setSpinDuration(5); // Bật animation lên 5s
 
-    // Dùng setTimeout(0) để đảm bảo state `spinDuration=5` được render ra DOM
-    // trước khi chúng ta thay đổi `rotationAngle`. Đây là bước quan trọng để tránh lỗi nhảy kết quả.
+    const winningSliceIndex = getWeightedRandomIndex();
+    const sliceCount = prizes.length;
+    const sliceAngle = 360 / sliceCount;
+    const cssOffsetAngle = -(sliceAngle / 2);
+
+    const randomSpins = Math.floor(Math.random() * 6) + 5;
+    const targetAngle = winningSliceIndex * sliceAngle + cssOffsetAngle;
+    // LUÔN tính góc quay mới, không dựa vào góc cũ. Dấu trừ để quay ngược chiều kim đồng hồ.
+    const totalRotation = -(randomSpins * 360 + targetAngle);
+    const spinDuration = 5;
+
+    // Sử dụng ref để thao tác trực tiếp với style, đảm bảo animation chạy đúng
+    const wheelElement = wheelRef.current;
+    if (wheelElement) {
+      // 1. Bật animation
+      wheelElement.style.transition = `transform ${spinDuration}s cubic-bezier(0.25, 0.1, 0.25, 1)`;
+      // 2. Bắt đầu quay
+      wheelElement.style.transform = `rotate(${totalRotation}deg)`;
+    }
+
+    // Đặt hẹn giờ để xử lý kết quả sau khi animation kết thúc
     setTimeout(() => {
-      const winningSliceIndex = getWeightedRandomIndex();
-      const sliceCount = prizes.length;
-      const sliceAngle = 360 / sliceCount;
-      const cssOffsetAngle = -(sliceAngle / 2);
+      const winningPrizeData = prizes[winningSliceIndex];
+      setWinningPrize(winningPrizeData);
+      setIsResultPopupOpen(true);
 
-      const randomSpins = Math.floor(Math.random() * 6) + 5;
-      const targetAngle = winningSliceIndex * sliceAngle + cssOffsetAngle;
-      const totalRotation = -(randomSpins * 360 + targetAngle);
-
-      setRotationAngle(totalRotation); // Bắt đầu quay
-
-      // Đặt hẹn giờ để xử lý kết quả sau khi animation kết thúc
-      setTimeout(() => {
-        const winningPrizeData = prizes[winningSliceIndex];
-        setWinningPrize(winningPrizeData);
-        setIsResultPopupOpen(true); // Mở popup kết quả
-        setIsSpinning(false); // Báo hiệu đã quay xong, điều này sẽ kích hoạt useEffect reset vòng quay
-      }, spinDuration * 1000); // Thời gian phải khớp với spinDuration
-    }, 0);
+      // Reset vòng quay để chuẩn bị cho lần sau
+      const finalRotation = totalRotation % 360;
+      if (wheelElement) {
+        wheelElement.style.transition = 'none'; // Tắt animation
+        wheelElement.style.transform = `rotate(${finalRotation}deg)`; // Đặt lại góc
+      }
+      setIsSpinning(false); // Báo hiệu đã quay xong
+    }, spinDuration * 1000);
   };
 
   const handleApplyPrizeChanges = (updatedPrizes) => {
@@ -142,8 +144,8 @@ function WheelGame() {
             <div className="wheel-wrapper">
               <div className="arrow-top"></div>
               <div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div>
-              <div style={{ transition: `transform ${spinDuration}s cubic-bezier(0.25, 0.1, 0.25, 1)` }}>
-                <Wheel prizes={prizes} rotationAngle={rotationAngle} />
+              <div ref={wheelRef}>
+                <Wheel prizes={prizes} />
               </div>
               <button id="spin" onClick={handleSpin} disabled={isSpinning}>
                 <img src="/static/favicon_oven.png" alt="Spin" />

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-function Wheel({ prizes, rotationAngle }) {
+function Wheel({ prizes }) {
   const sliceCount = prizes.length > 0 ? prizes.length : 1;
   const sliceAngle = 360 / sliceCount;
   const cssOffsetAngle = -(sliceAngle / 2);
@@ -17,7 +17,7 @@ function Wheel({ prizes, rotationAngle }) {
   }, [sliceAngle]);
 
   return (
-    <div className="container-wheel" style={{ transform: `rotate(${rotationAngle}deg)` }}>
+    <div className="container-wheel">
       {prizes.map((prize, index) => {
         const rotation = cssOffsetAngle + index * sliceAngle;
         return (
