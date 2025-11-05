@@ -45,6 +45,26 @@ function WheelGame() {
     }
   }, []);
 
+  // Effect để quản lý class 'body-no-scroll' khi popup mở/đóng
+  useEffect(() => {
+    if (isResultPopupOpen || isRatePopupOpen || isAddPrizePopupOpen) {
+      document.body.classList.add('body-no-scroll');
+    } else {
+      document.body.classList.remove('body-no-scroll');
+    }
+    // Cleanup function để đảm bảo class được xóa khi component unmount
+    return () => document.body.classList.remove('body-no-scroll');
+  }, []);
+
+  // Effect này sẽ chạy KHI isSpinning chuyển từ true -> false
+  // để reset vòng quay một cách an toàn.
+  useEffect(() => {
+    if (!isSpinning) {
+      const finalRotation = rotationAngle % 360;
+      setSpinDuration(0); // Tắt animation
+      setRotationAngle(finalRotation); // Đặt lại góc
+    }
+  }, [isSpinning]);
   // === HELPER FUNCTIONS ===
   const getWeightedRandomIndex = () => {
     const prizeProbabilities = prizes.map(p => p.probability);
@@ -59,37 +79,36 @@ function WheelGame() {
     return prizeProbabilities.length - 1;
   };
 
-  // === EVENT SPIN ===
+  // === EVENT HANDLERS ===
   const handleSpin = () => {
     if (isSpinning || currentSpins <= 0 || prizes.length === 0) return;
 
     setCurrentSpins(currentSpins - 1);
-    setIsSpinning(true);
-    setSpinDuration(5); // Bật lại animation
+    setIsSpinning(true); // Báo hiệu bắt đầu quay, các nút sẽ bị vô hiệu hóa
+    setSpinDuration(5); // Bật animation lên 5s
 
-    const winningSliceIndex = getWeightedRandomIndex();
-    const sliceCount = prizes.length;
-    const sliceAngle = 360 / sliceCount;
-    const cssOffsetAngle = -(sliceAngle / 2);
-
-    const randomSpins = Math.floor(Math.random() * 6) + 5;
-    const targetAngle = winningSliceIndex * sliceAngle + cssOffsetAngle;
-    const totalRotation = rotationAngle - (randomSpins * 360 + targetAngle);
-
-    setRotationAngle(totalRotation);
-
+    // Dùng setTimeout(0) để đảm bảo state `spinDuration=5` được render ra DOM
+    // trước khi chúng ta thay đổi `rotationAngle`. Đây là bước quan trọng để tránh lỗi nhảy kết quả.
     setTimeout(() => {
-      const winningPrizeData = prizes[winningSliceIndex];
-      setWinningPrize(winningPrizeData);
-      setIsResultPopupOpen(true);
+      const winningSliceIndex = getWeightedRandomIndex();
+      const sliceCount = prizes.length;
+      const sliceAngle = 360 / sliceCount;
+      const cssOffsetAngle = -(sliceAngle / 2);
 
-      // Reset wheel for next spin
-      const finalRotation = totalRotation % 360;
-      setSpinDuration(0); // Tắt animation để reset góc
-      setRotationAngle(finalRotation);
+      const randomSpins = Math.floor(Math.random() * 6) + 5;
+      const targetAngle = winningSliceIndex * sliceAngle + cssOffsetAngle;
+      const totalRotation = -(randomSpins * 360 + targetAngle);
 
-      setIsSpinning(false);
-    }, spinDuration * 1000 + 200); // Thêm 200ms để đảm bảo animation kết thúc
+      setRotationAngle(totalRotation); // Bắt đầu quay
+
+      // Đặt hẹn giờ để xử lý kết quả sau khi animation kết thúc
+      setTimeout(() => {
+        const winningPrizeData = prizes[winningSliceIndex];
+        setWinningPrize(winningPrizeData);
+        setIsResultPopupOpen(true); // Mở popup kết quả
+        setIsSpinning(false); // Báo hiệu đã quay xong, điều này sẽ kích hoạt useEffect reset vòng quay
+      }, spinDuration * 1000); // Thời gian phải khớp với spinDuration
+    }, 0);
   };
 
   const handleApplyPrizeChanges = (updatedPrizes) => {
@@ -110,7 +129,7 @@ function WheelGame() {
       <main>
         <div className="game-area">
           <div className="container-title">
-            <img src="/static/lucky-draw.png" alt="" />
+            <img src="/static/lucky-draw.png" alt="Lucky Draw" />
           </div>
           <div className="spin-counter">
             <p className="title-down">Bạn còn <span id="spin-count">{currentSpins}</span> lượt quay</p>
@@ -160,13 +179,14 @@ function WheelGame() {
       {/* SETUP BUTTONS */}
       <div className="show-button-container">
         <div className="button-group-top">
-          <button id="show-probabilities-btn" className="btn-action" onClick={() => setIsRatePopupOpen(true)} disabled={isSpinning}>Tỉ lệ</button>
-          <button id="add-prize-btn" className="btn-action" onClick={() => setIsAddPrizePopupOpen(true)} disabled={isSpinning}>Thêm quà</button>
+          <button id="show-probabilities-btn" className="btn-action" onClick={() => setIsRatePopupOpen(true)} disabled={isSpinning} style={{ cursor: isSpinning ? 'not-allowed' : 'pointer' }}>Tỉ lệ</button>
+          <button id="add-prize-btn" className="btn-action" onClick={() => setIsAddPrizePopupOpen(true)} disabled={isSpinning} style={{ cursor: isSpinning ? 'not-allowed' : 'pointer' }}>Thêm quà</button>
         </div>
         <div className="button-group-top">
-          <button id="restart-btn" className="btn-action" onClick={() => { localStorage.clear(); window.location.reload(); }}>Khởi động lại</button>
+          <button id="restart-btn" className="btn-action" onClick={() => { localStorage.clear(); window.location.reload(); }} disabled={isSpinning} style={{ cursor: isSpinning ? 'not-allowed' : 'pointer' }}>Khởi động lại</button>
         </div>
       </div>
+      
     </>
   );
 }
