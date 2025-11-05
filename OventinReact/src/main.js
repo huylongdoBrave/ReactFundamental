@@ -242,8 +242,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         addPrizeBtn.style.cursor = 'not-allowed';
         restartBtn.style.cursor = 'not-allowed';
 
-        // Lấy mảng tỉ lệ trúng thưởng mới nhất từ module RateManager
-        const prizeProbabilities = window.OventinRateManager.getProbabilities();
+        // // Lấy mảng tỉ lệ trúng thưởng mới nhất từ module RateManager
+        // const prizeProbabilities = window.OventinRateManager.getProbabilities();
 
         // Xác định ô quà trúng thưởng dựa trên tỉ lệ đã lấy
         const winningSliceIndex = getWeightedRandomIndex();

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oventin</title>
+    <!-- link -->
+<link rel="stylesheet" href="./main.css" />
+<link rel="shortcut icon" href="./static/favicon_oven.png" type="image/x-icon">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    
+    <!-- Header -->
+<header>
+    <nav class="main-nav">
+        <div class="nav-left">
+            <a href="#" class="logo">
+                <img src="./static/favicon_oven.png" alt="Oventin Logo">
+            </a>
+            <ul class="main-menu">
+                <li class="menu-item ">
+                    <a href="#">
+                        <div class="menu-item-box">
+                            <!-- <i class="fa-solid fa-dharmachakra menu-icon"></i> -->
+                            <img class="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/product.png" alt="">
+                            <span class="menu-title">Sản Phẩm</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <div class="menu-item-box">
+                            <!-- <i class="fa-solid fa-clock-rotate-left menu-icon"></i> -->
+                            <img class="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/gift.png" alt="">
+                            <span class="menu-title">Đổi Quà</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a href="#">
+                        <div class="menu-item-box">
+                            <!-- <i class="fa-solid fa-gift menu-icon"></i> -->
+                            <img  class="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/spin.png" alt="">
+                            <span class="menu-title">Vòng Quay</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#">
+                        <div class="menu-item-box">
+                            <img src="https://ovaltine-website-dev.estuary.solutions/img/menu/more.png" alt="" class="menu-icon">
+                            <span class="menu-title">Thêm</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="nav-right-item"><i class="fa-solid fa-star"></i> <span>1,000</span></div>
+            <div class="nav-right-item"><i class="fa-solid fa-ticket"></i> <span>10</span></div>
+            <button class="nav-button">Nhập mã</button>
+            <div class="nav-right-item">
+                <!-- <i class="fa-solid fa-user"></i> -->
+                 <img class="img-nav-right" src="https://s3dev.estuary.solutions/ovaltine2024dev/76b6ed4d-02ed-4393-810a-967b3586b1dc" alt="">
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <!-- Main Content -->
+<main>
+    <div class="game-area">
+        <div class="container-title">
+            <img src="./static/lucky-draw.png" alt="">
+        </div>
+        <div class="spin-counter">
+            <p class="title-down">Bạn còn <span id="spin-count">5</span> lượt quay</p>
+        </div>
+        <div class="add-spin-container">
+            <button id="add-spins-btn" class="btn-add">Thêm lượt</button>
+        </div>    
+        <div class="wheel-row">
+            <img src="./static/dolphine.png" alt="Dolphine" class="side-image">
+            <div class="wheel-wrapper">
+                <div class="arrow-top"></div>
+                <div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div><div class="light"></div>
+                <div class="container-wheel"><!-- Receive Json Data --></div>
+                <button id="spin"><img src="./static/favicon_oven.png" alt="Spin"></button>
+            </div>
+             <img src="./static/boy.png" alt="Boy" class="side-image">
+        </div>
+    </div>
+</main>
+  <p class="title-down">Bấm vào Vòng Quay May Mắn để bắt đầu quay</p>
+
+        <!-- POPUP KẾT QUẢ-->
+    <div id="popup-overlay" class="popup-hidden">
+        <img src="./static/dolphine.png" alt="Dolphine" class="side-image-popup">
+        <div id="popup-box">
+            <img src="./static/favicon_oven.png" alt="Oventin Logo" class="popup-logo">
+            <img src="./static/noti.png" alt="Thông báo" class="popup-title">
+            <!-- <button id="popup-close-btn" class="popup-close">&times;</button> -->
+            <p id="popup-prize-name" class="popup-prize"></p>
+            <small id="popup-prize-id"></small>
+            <button id="popup-confirm-btn" class="popup-confirm">Tiếp tục quay</button>
+        </div>
+        <img src="./static/boy.png" alt="Boy" class="side-image-popup">
+    </div>
+
+
+        <!-- .PHẦN NÚT SETUP -->
+    <!-- Button add prize, probabilities prize -->
+    <div class="show-button-container">
+        <div class="button-group-top"> <!-- Nhóm 1 hàng -->
+            <button id="show-probabilities-btn" class="btn-action">Tỉ lệ</button>
+            <button id="add-prize-btn" class="btn-action">Thêm quà</button>
+        </div>
+        <div class="button-group-top">
+            <button id="restart-btn" class="btn-action" style="opacity: 0;">Khởi động lại vòng xoay</button>
+        </div>
+    </div>
+
+
+    <!-- .BẢNG TÙY CHỈNH -->
+    <!-- Popup Probabilities Table -->
+    <div id="probabilities-popup-overlay" class="popup-hidden">
+        <div id="probabilities-popup-box">
+            <button id="probabilities-close-btn" class="popup-close">&times;</button>
+            <h3 class="probabilities-title">Bảng Tỉ Lệ Trúng Thưởng</h3>
+            <div class="probabilities-table">
+                <div id="probabilities-table-body"></div>
+            </div>
+            <p id="probabilities-total">Tổng tỉ lệ 100%</p>
+            <center><button id="apply-probabilities-btn" type="button" class="btn-action" style="width: 300px;">Cập nhật</button></center>
+        </div>
+    </div>
+
+    <!-- Popup Add Prize Table -->
+    <div id="add-prize-popup-overlay" class="popup-hidden">
+        <div id="add-prize-popup-box">
+            <button id="add-prize-close-btn" class="popup-close">&times;</button>
+            <h3 class="probabilities-title">Thêm Quà Mới</h3>
+            <form id="add-prize-form">
+                <div class="form-group">
+                    <label for="prize-name">Tên quà:</label>
+                    <input type="text" id="prize-name" name="name" required>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="prize-type">Loại quà:</label>
+                    <select id="prize-type" name="type">
+                        <option value="text">Chữ (Text)</option>
+                        <option value="image">Hình ảnh (Image)</option>
+                    </select>
+                </div> -->
+                <div class="form-group" id="prize-value-group">
+                    <label for="prize-value">Giá trị (Văn bản hoặc URL hình ảnh):</label>
+                    <input type="text" id="prize-value" name="value" required placeholder="Nhập văn bản hoặc dán URL hình ảnh...">
+                </div>
+                <div class="form-group">
+                    <label for="prize-probability">Tỉ lệ (%):</label>
+                    <input type="number" id="prize-probability" name="probability" value="0" min="0" max="100" step="any" placeholder="Nhập số thực" required>
+                </div>
+                <div class="form-group">
+                    <label for="prize-color">Màu nền:</label>
+                    <input type="color" id="prize-color" name="color" value="#ffffff">
+                </div>
+                <button type="submit" class="btn-action">Lưu Quà</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+<footer >
+    <div class="container-footer">
+        <div class="content-footer">
+            <div class="footer-top">
+                <p class="company-name">CÔNG TY TNHH AB AGRI VIỆT NAM</p>
+                <p>Tầng 6A2 Tòa nhà Viettel, 285 Cách Mạng Tháng 8, Phường 12, Quận 10, Thành phố Hồ Chí Minh, Việt Nam</p>
+            </div>
+            <div class="footer-middle">
+                <div class="footer-column">
+                    <div class="footer-item"><i class="fa-solid fa-phone"></i><span>/Ovaltine Vietnam</span></div>
+                    <div class="footer-item"><i class="fa-solid fa-envelope"></i><span>/Ovaltine Vietnam</span></div>
+                    <div class="footer-item"><i class="fa-brands fa-facebook"></i><span>Thể lệ chương trình</span></div>
+                </div>
+                <div class="footer-column">
+                    <div class="footer-item"><i class="fa-solid fa-file-contract"></i><span>/Ovaltine Vietnam</span></div>
+                    <div class="footer-item"><i class="fa-solid fa-shield-halved"></i><span>/Ovaltine Vietnam</span></div>
+                    <div class="footer-item"><i class="fa-solid fa-circle-question"></i><span>Chính sách bảo mật</span></div>
+                </div>
+                <div class="footer-column">
+                    <div class="footer-item"><i class="fa-solid fa-certificate"></i><span>/19005306</span></div>
+                    <div class="footer-item"><i class="fa-solid fa-gavel"></i><span>/Ovaltine Vietnam</span></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Ovaltine Vietnam © 2025</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Thư viện SortableJS để hỗ trợ drag trên mobile -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="./ratetable.js"></script>
+<script src="./addprize.js"></script>
+<script src="./main.js"></script>
+</body>
+</html>

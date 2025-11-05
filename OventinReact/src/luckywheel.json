@@ -1,0 +1,12 @@
+{
+  "prizes": [
+    {
+      "name": "Siêu laptop",
+      "type": "image",
+      "value": "https://s3dev.estuary.solutions/ovaltine2024dev/bda0db2f-f354-4a90-91c8-36ce183c4f38",
+      "probability": 0.0005,
+      "color": "#ffebba",
+      "id": "402f"
+    }
+  ]
+}
