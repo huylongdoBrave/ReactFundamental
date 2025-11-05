@@ -10,6 +10,7 @@ function Wheel({ prizes, rotationAngle }) {
       {prizes.map((prize, index) => {
         const rotation = cssOffsetAngle + index * sliceAngle;
         return (
+          
           <div
             key={prize.id}
             className="container-wheel-part"
@@ -25,6 +26,7 @@ function Wheel({ prizes, rotationAngle }) {
             )}
             <span className="prize-name-display">{prize.name}</span>
           </div>
+
         );
       })}
     </div>
