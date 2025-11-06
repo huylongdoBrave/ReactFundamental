@@ -10,7 +10,7 @@ function Wheel({ prizes }) {
   // useMemo để chỉ tính toán lại khi sliceAngle thay đổi.
   const dynamicWidth = useMemo(() => {
     // Giả sử kích thước vòng quay là 360px như trong CSS
-    const containerWheelSize = 360; 
+  const containerWheelSize = 360; 
     // Công thức: đường kính * sin(góc ở tâm / 2).
     // Nhân với 1.05 để bù vào lỗi làm tròn của trình duyệt, giúp các ô khít vào nhau.
     return containerWheelSize * Math.sin((sliceAngle / 2) * (Math.PI / 180)) * 1.05;
