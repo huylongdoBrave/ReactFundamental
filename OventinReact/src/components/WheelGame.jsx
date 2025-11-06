@@ -9,7 +9,7 @@ function WheelGame() {
   const [prizes, setPrizes] = useState([]);
   const [currentSpins, setCurrentSpins] = useState(5);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [rotationAngle, setRotationAngle] = useState(0);
+  // const [rotationAngle, setRotationAngle] = useState(0);
   const wheelRef = useRef(null); // Ref để tham chiếu đến DOM của vòng quay
 
   // State cho các popup
