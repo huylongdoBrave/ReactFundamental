@@ -81,7 +81,6 @@ function WheelGame() {
     const sliceCount = prizes.length;
     const sliceAngle = 360 / sliceCount;
     const cssOffsetAngle = -(sliceAngle / 2);
-
     const randomSpins = Math.floor(Math.random() * 6) + 5;
     const targetAngle = winningSliceIndex * sliceAngle + cssOffsetAngle;
     // LUÔN tính góc quay mới, không dựa vào góc cũ. Dấu trừ để quay ngược chiều kim đồng hồ.
@@ -120,7 +119,7 @@ function WheelGame() {
   };
 
   const handleAddPrize = (newPrize) => {
-    const updatedPrizes = [...prizes, newPrize];
+    const updatedPrizes = [...prizes, newPrize]; //Cập nhật newPrize vào prizes
     setPrizes(updatedPrizes);
     localStorage.setItem('oventinPrizes', JSON.stringify(updatedPrizes));
     alert(`Đã thêm quà "${newPrize.name}"!`);
@@ -185,7 +184,10 @@ function WheelGame() {
           <button id="add-prize-btn" className="btn-action" onClick={() => setIsAddPrizePopupOpen(true)} disabled={isSpinning} style={{ cursor: isSpinning ? 'not-allowed' : 'pointer' }}>Thêm quà</button>
         </div>
         <div className="button-group-top">
-          <button id="restart-btn" className="btn-action" onClick={() => { localStorage.clear(); window.location.reload(); }} disabled={isSpinning} style={{ cursor: isSpinning ? 'not-allowed' : 'pointer' }}>Khởi động lại</button>
+          <button id="restart-btn" className="btn-action"
+          onClick={() => { localStorage.clear(); window.location.reload(); } } 
+          disabled={isSpinning} 
+          style={{ cursor: isSpinning ? 'not-allowed' : 'pointer' }}>Khởi động lại</button>
         </div>
       </div>
       
