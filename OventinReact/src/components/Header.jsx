@@ -1,23 +1,26 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTicket } from '@fortawesome/free-solid-svg-icons';
+import { Link, NavLink } from 'react-router-dom';
 
 function Header() {
 return (
 <header>
     <nav className="main-nav">
         <div className="nav-left">
-            <a href="#" className="logo">
+            {/* <a href="#" className="logo"> */}
+            <Link to="/" className="logo">
                 <img src="/static/favicon_oven.png" alt="Oventin Logo" />
-            </a>
+            </Link>
+            {/* </a> */}
             <ul className="main-menu">
                 <li className="menu-item ">
-                    <a href="#">
+                    <NavLink to="/products" className={({ isActive }) => isActive ? "active-link" : ""}>
                         <div className="menu-item-box">
-                            <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/product.png" alt="" />
+                            <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/product.png" alt="Sản phẩm" />
                             <span className="menu-title">Sản Phẩm</span>
                         </div>
-                    </a>
+                    </NavLink>
                 </li>
                 <li className="menu-item">
                     <a href="#">
@@ -27,13 +30,15 @@ return (
                         </div>
                     </a>
                 </li>
-                <li className="menu-item active">
-                    <a href="#">
+                {/* <li className="menu-item active">
+                    <a href="#"></a> */}
+                <li className="menu-item active"> {/* isActive, active-link => Trạng thái url của thẻ navlink */} 
+                    <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : ""}>
                         <div className="menu-item-box">
-                            <img  className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/spin.png" alt="" />
+                            <img  className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/spin.png" alt="Vòng quay" />
                             <span className="menu-title">Vòng Quay</span>
                         </div>
-                    </a>
+                    </NavLink>
                 </li>
                 <li className="menu-item">
                     <a href="#">
