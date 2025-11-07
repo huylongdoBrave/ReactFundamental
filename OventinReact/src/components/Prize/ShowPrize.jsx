@@ -19,33 +19,33 @@ function ShowPrize() {
         {prizes.length > 0 ? (
           <table className="prize-table">
             <thead>
-              <tr>
+                <tr>
                 <th>Tên Quà</th>
                 <th>Hình ảnh / Giá trị</th>
                 <th>Tỉ lệ</th>
-              </tr>
+                </tr>
             </thead>
             <tbody>
-              {prizes.map(prize => (
+                {prizes.map(prize => (
                 <tr key={prize.id}>
-                  <td data-label="Tên Quà">{prize.name}</td>
-                  <td data-label="Giá trị">
+                    <td data-label="Tên Quà">{prize.name}</td>
+                    <td data-label="Giá trị">
                     {prize.type === 'image' ? (
-                      <img src={prize.value} alt={prize.name} className="prize-table-image" />
+                        <img src={prize.value} alt={prize.name} className="prize-table-image" />
                     ) : (
-                      <span className="prize-table-text">{prize.value}</span>
+                        <span className="prize-table-text">{prize.value}</span>
                     )}
-                  </td>
-                  <td data-label="Tỉ lệ">
+                    </td>
+                    <td data-label="Tỉ lệ">
                     {(prize.probability * 100).toFixed(4)}%
-                  </td>
+                    </td>
                 </tr>
-              ))}
+                ))}
             </tbody>
-          </table>
+            </table>
         ) : (
-          <p>Không có quà nào để hiển thị.</p>
-          
+            <p>Không có quà nào để hiển thị.</p>
+            
         )}
 
       </div>

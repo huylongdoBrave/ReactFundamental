@@ -16,10 +16,10 @@ return (
             <ul className="main-menu">
                 {/* Bọc mỗi mục menu trong NavLink và gán className động */}
                 {/* <NavLink to="/products" className={({ isActive }) => isActive ? "active-link active" : ""}></NavLink> */}
-                <NavLink to="/products" className={({ isActive }) => "menu-item" + (isActive ? " active" : "")}>
+                <NavLink to="/show-prize" className={({ isActive }) => "menu-item" + (isActive ? " active" : "")}>
                     <div className="menu-item-box">
                         <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/product.png" alt="Sản phẩm" />
-                        <span className="menu-title">Sản Phẩm</span>
+                        <span className="menu-title">Danh Sách <br /> Sản Phẩm</span>
                     </div>
                 </NavLink>
 

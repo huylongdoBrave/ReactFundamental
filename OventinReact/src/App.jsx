@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import WheelGame from './components/WheelGame';
 import ShowPrize from './components/ShowPrize';
+import EditPrize from './components/EditPrize';
 
 function App() {
   return (
@@ -17,7 +18,9 @@ function App() {
 
         {/* Route cho trang sản phẩm */}
         <Route path="/products" element={<ShowPrize />} />
-        
+
+        <Route path="/edit" element={<EditPrize />} />
+
       </Routes>
       <Footer />
     </>
