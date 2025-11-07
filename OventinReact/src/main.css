@@ -545,7 +545,7 @@ footer {
     position: relative;
     width: 350px;
     height: 180px;
-    background-image: url('./static/modal.png');
+    background-image: url('/static/modal.png');
     background-size: cover; /* Đảm bảo hình ảnh lấp đầy khung */
     background-position: center; /* Căn giữa hình ảnh */
     background-repeat: no-repeat; /* Không lặp lại hình ảnh */

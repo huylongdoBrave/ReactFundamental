@@ -56,13 +56,34 @@ function WheelGame() {
     return () => document.body.classList.remove('body-no-scroll');
   }, []);
 
-  // === HELPER FUNCTIONS ===
+  // === Tính bảo hiểm khi quay ===
+  /*
+     * Chọn một index (vị trí) của quà một cách ngẫu nhiên, có trọng số (dựa trên tỉ lệ).
+     * Ví dụ: Nếu tỉ lệ là [0.1, 0.7, 0.2], thì quà ở index 1 có 70% cơ hội được chọn.
+     * Cách hoạt động:
+     * 1. Tạo một số ngẫu nhiên `rand` từ 0 đến 1.
+     * 2. Lặp qua mảng tỉ lệ. Ở mỗi bước, kiểm tra xem `rand` có nhỏ hơn tỉ lệ hiện tại không.
+     *    - Nếu có, trả về index hiện tại.
+     *    - Nếu không, trừ tỉ lệ đó khỏi `rand` và tiếp tục vòng lặp.
+     * Điều này tương đương với việc chia một đoạn thẳng từ 0 đến 1 thành các đoạn nhỏ có độ dài bằng tỉ lệ,
+     * và xem `rand` rơi vào đoạn nào.
+     */
+
   const getWeightedRandomIndex = () => {
+    // Lấy mảng tỉ lệ mới nhất từ RateManager. Ví dụ: [0.1, 0.7, 0.2].
     const prizeProbabilities = prizes.map(p => p.probability);
+    // Tạo một số ngẫu nhiên trong khoảng từ 0 (bao gồm) đến 1 (loại trừ).
     let rand = Math.random();
+    // Biến để theo dõi tổng tỉ lệ tích lũy.
     let cumulativeProbability = 0;
     for (let i = 0; i < prizeProbabilities.length; i++) {
+      // Cộng tỉ lệ của ô hiện tại vào tổng tích lũy.
       cumulativeProbability += prizeProbabilities[i];
+      // Nếu số ngẫu nhiên nhỏ hơn tổng tích lũy,
+      // có nghĩa là nó đã "rơi" vào khoảng của ô quà này.
+      // Ví dụ: rand=0.5, probs=[0.2, 0.4, 0.4].
+      // i=0: cumulative=0.2. 0.5 < 0.2? Không.
+      // i=1: cumulative=0.2+0.4=0.6. 0.5 < 0.6? Có. Trả về index 1.
       if (rand < cumulativeProbability) {
         return i;
       }
@@ -70,7 +91,7 @@ function WheelGame() {
     return prizeProbabilities.length - 1;
   };
 
-  // === EVENT HANDLERS ===
+  // === Sự kiện quay ===
   const handleSpin = () => {
     if (isSpinning || currentSpins <= 0 || prizes.length === 0) return;
 
@@ -112,12 +133,14 @@ function WheelGame() {
     }, spinDuration * 1000);
   };
 
+  //Cập nhật quà
   const handleApplyPrizeChanges = (updatedPrizes) => {
     setPrizes(updatedPrizes);
     localStorage.setItem('oventinPrizes', JSON.stringify(updatedPrizes));
     alert('Đã cập nhật thành công!');
   };
 
+  //Thêm quà
   const handleAddPrize = (newPrize) => {
     const updatedPrizes = [...prizes, newPrize]; //Cập nhật newPrize vào prizes
     setPrizes(updatedPrizes);
