@@ -139,18 +139,18 @@ function WheelGame() {
             <button id="add-spins-btn" className="btn-add" onClick={() => setCurrentSpins(currentSpins + 10)}>Thêm lượt</button>
           </div>
           <div className="wheel-row">
-            <img src="/static/dolphine.png" alt="Dolphine" className="side-image" />
-            <div className="wheel-wrapper">
-              <div className="arrow-top"></div>
-              <div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div>
-              <div ref={wheelRef}>
-                <Wheel prizes={prizes} />
+              <img src="/static/dolphine.png" alt="Dolphine" className="side-image" />
+              <div className="wheel-wrapper">
+                <div className="arrow-top"></div>
+                <div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div><div className="light"></div>
+                <div ref={wheelRef}>
+                  <Wheel prizes={prizes} />
+                </div>
+                <button id="spin" onClick={handleSpin} disabled={isSpinning}>
+                  <img src="/static/favicon_oven.png" alt="Spin" />
+                </button>
               </div>
-              <button id="spin" onClick={handleSpin} disabled={isSpinning}>
-                <img src="/static/favicon_oven.png" alt="Spin" />
-              </button>
-            </div>
-            <img src="/static/boy.png" alt="Boy" className="side-image" />
+              <img src="/static/boy.png" alt="Boy" className="side-image" />
           </div>
         </div>
       </main>
@@ -187,7 +187,7 @@ function WheelGame() {
           <button id="restart-btn" className="btn-action"
           onClick={() => { localStorage.clear(); window.location.reload(); } } 
           disabled={isSpinning} 
-          style={{ cursor: isSpinning ? 'not-allowed' : 'pointer' }}>Khởi động lại</button>
+          style={{ cursor: isSpinning ? 'not-allowed' : 'pointer', opacity: 0 }}>Khởi động lại</button>
         </div>
       </div>
       
