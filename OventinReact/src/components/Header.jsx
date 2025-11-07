@@ -14,40 +14,35 @@ return (
             </Link>
             {/* </a> */}
             <ul className="main-menu">
-                <li className="menu-item ">
-                    <NavLink to="/products" className={({ isActive }) => isActive ? "active-link" : ""}>
-                        <div className="menu-item-box">
-                            <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/product.png" alt="Sản phẩm" />
-                            <span className="menu-title">Sản Phẩm</span>
-                        </div>
-                    </NavLink>
-                </li>
-                <li className="menu-item">
-                    <a href="#">
-                        <div className="menu-item-box">
-                            <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/gift.png" alt="" />
-                            <span className="menu-title">Đổi Quà</span>
-                        </div>
-                    </a>
-                </li>
-                {/* <li className="menu-item active">
-                    <a href="#"></a> */}
-                <li className="menu-item active"> {/* isActive, active-link => Trạng thái url của thẻ navlink */} 
-                    <NavLink to="/" className={({ isActive }) => isActive ? "active-link" : ""}>
-                        <div className="menu-item-box">
-                            <img  className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/spin.png" alt="Vòng quay" />
-                            <span className="menu-title">Vòng Quay</span>
-                        </div>
-                    </NavLink>
-                </li>
-                <li className="menu-item">
-                    <a href="#">
-                        <div className="menu-item-box">
-                            <img src="https://ovaltine-website-dev.estuary.solutions/img/menu/more.png" alt="" className="menu-icon" />
-                            <span className="menu-title">Thêm</span>
-                        </div>
-                    </a>
-                </li>
+                {/* Bọc mỗi mục menu trong NavLink và gán className động */}
+                {/* <NavLink to="/products" className={({ isActive }) => isActive ? "active-link active" : ""}></NavLink> */}
+                <NavLink to="/products" className={({ isActive }) => "menu-item" + (isActive ? " active" : "")}>
+                    <div className="menu-item-box">
+                        <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/product.png" alt="Sản phẩm" />
+                        <span className="menu-title">Sản Phẩm</span>
+                    </div>
+                </NavLink>
+
+                <a href="#" className="menu-item">
+                    <div className="menu-item-box">
+                        <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/gift.png" alt="Đổi Quà" />
+                        <span className="menu-title">Đổi Quà</span>
+                    </div>
+                </a>
+
+                <NavLink to="/" end className={({ isActive }) => "menu-item" + (isActive ? " active" : "")}>
+                    <div className="menu-item-box">
+                        <img className="menu-icon" src="https://ovaltine-website-dev.estuary.solutions/img/menu/spin.png" alt="Vòng quay" />
+                        <span className="menu-title">Vòng Quay</span>
+                    </div>
+                </NavLink>
+
+                <a href="#" className="menu-item">
+                    <div className="menu-item-box">
+                        <img src="https://ovaltine-website-dev.estuary.solutions/img/menu/more.png" alt="Thêm" className="menu-icon" />
+                        <span className="menu-title">Thêm</span>
+                    </div>
+                </a>
             </ul>
         </div>
         <div className="nav-right">

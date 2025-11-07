@@ -17,26 +17,35 @@ function ShowPrize() {
         <h1 className="prize-list-title">Danh Sách Quà Tặng</h1>
 
         {prizes.length > 0 ? (
-          <div className="prize-grid">
-            {   prizes.map(prize => (
-                <div key={prize.id} className="prize-card">
-                    <div className="prize-card-image-container">
+          <table className="prize-table">
+            <thead>
+              <tr>
+                <th>Tên Quà</th>
+                <th>Hình ảnh / Giá trị</th>
+                <th>Tỉ lệ</th>
+              </tr>
+            </thead>
+            <tbody>
+              {prizes.map(prize => (
+                <tr key={prize.id}>
+                  <td data-label="Tên Quà">{prize.name}</td>
+                  <td data-label="Giá trị">
                     {prize.type === 'image' ? (
-                        <img src={prize.value} alt={prize.name} className="prize-card-image" />
+                      <img src={prize.value} alt={prize.name} className="prize-table-image" />
                     ) : (
-                        <div className="prize-card-text">{prize.value}</div>
+                      <span className="prize-table-text">{prize.value}</span>
                     )}
-                    </div>
-                    <div className="prize-card-info">
-                    <h3 className="prize-card-name">{prize.name}</h3>
-                    <p className="prize-card-probability">Tỉ lệ: {(prize.probability * 100).toFixed(4)}%</p>
-                    </div>
-              </div>
-            ))}
-
-          </div>
+                  </td>
+                  <td data-label="Tỉ lệ">
+                    {(prize.probability * 100).toFixed(4)}%
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         ) : (
           <p>Không có quà nào để hiển thị.</p>
+          
         )}
 
       </div>

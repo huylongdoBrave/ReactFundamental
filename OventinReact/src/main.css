@@ -37,7 +37,6 @@ body {
     overflow: hidden;
 }
 
-
 header {
     height: calc(var(--menu-bar-height) + var(--menu-item-size) / 2 + 5px); /* Điều chỉnh chiều cao header */
     margin-bottom: 20px;
@@ -100,6 +99,7 @@ header {
     width: var(--menu-item-size);
     height: var(--menu-item-size);
     background-color: #233da3;
+    color: white;
     border-radius: 8px; /* Bo góc nhẹ cho khối vuông */
     display: flex;
     flex-direction: column;
@@ -124,6 +124,7 @@ header {
 .menu-item:hover .menu-item-box {
     background-color:  rgb(255, 65, 9);
     transition: background-color 0.3s ease;
+    color: white;
 }
 
 .menu-item:hover .menu-item-box{
@@ -870,6 +871,67 @@ footer {
     width: 100%; /* Nút chiếm toàn bộ chiều rộng */
 }
 
+/* === Prize List Table (ShowPrize.jsx) === */
+.prize-list-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+.prize-list-title {
+  text-align: center;
+  color: #ffeb3b;
+  margin-bottom: 1.5rem;
+}
+
+.prize-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+.prize-table th,
+.prize-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prize-table th {
+  background-color: rgba(255, 235, 59, 0.2);
+  color: #ffeb3b;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.prize-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.prize-table-image {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 5px;
+}
+
+.prize-table-text {
+  font-style: italic;
+}
+
+/* Căn giữa nội dung cột giá trị và tỉ lệ */
+.prize-table td:nth-child(2),
+.prize-table td:nth-child(3),
+.prize-table th:nth-child(2),
+.prize-table th:nth-child(3) {
+  text-align: center;
+}
+
 
 /* --- Responsive --- */
 /* Tablet (max-width: 900px) */
@@ -1073,7 +1135,47 @@ footer {
     .btn-action:hover {
 	background-color: #eeeeee;
     color: #ff6702;
+    }
+
+    .prize-table thead {
+    display: none; /* Ẩn header của bảng */
+    }
+
+    .prize-table, .prize-table tbody, .prize-table tr, .prize-table td {
+    display: block;
+    width: 100%;
+    }
+
+    .prize-table tr {
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    }
+
+    .prize-table td {
+    text-align: right; /* Căn phải nội dung */
+    padding-left: 50%; /* Tạo không gian cho label */
+    position: relative;
+    border-bottom: none;
+    }
+
+    .prize-table td::before {
+    content: attr(data-label); /* Lấy nội dung từ data-label */
+    position: absolute;
+    left: 15px;
+    width: calc(50% - 30px);
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: #ffeb3b;
+    }
+
+    .prize-table td:last-child {
+    border-bottom: 0;
+    }
+
 }
 
 
-}
+

@@ -20,29 +20,49 @@ function WheelGame() {
 
   // === DATA LOADING (useEffect) ===
   // Chạy 1 lần khi component được mount để tải dữ liệu
+  // Chuyển useEffect thành async để sử dụng await
   useEffect(() => {
-    const LOCAL_STORAGE_KEY = 'oventinPrizes';
-    const savedPrizes = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const loadPrizes = async () => {
+      const LOCAL_STORAGE_KEY = 'oventinPrizes';
+      const API_URL = 'http://localhost:3000/prizes'; // Endpoint của json-server
+      const savedPrizes = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-    if (savedPrizes) {
-      setPrizes(JSON.parse(savedPrizes));
-      console.log("Loaded prizes from Local Storage.");
-    } else {
-      // Dữ liệu mẫu nếu không có trong localStorage
-      const mockData = [
-        { id: 1, name: "Điện thoại", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/bda0db2f-f354-4a90-91c8-36ce183c4f38", probability: 0.0005, color: "#ef0012" },
-        { id: 2, name: "Good luck", type: "text", value: "Chúc bạn may mắn lần sau", probability: 0.14, color: "#ffffff" },
-        { id: 3, name: "Máy ảnh", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/3f8f5ad0-dcc1-4431-b3e7-271d3c990abd", probability: 0.0005, color: "#ef0012" },
-        { id: 4, name: "Thẻ cào", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/64ac9af8-24f1-4dc2-86f6-1923cef7e066", probability: 0.25, color: "#ffffff" },
-        { id: 5, name: "Điện thoại", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/bda0db2f-f354-4a90-91c8-36ce183c4f38", probability: 0.0005, color: "#ef0012" },
-        { id: 6, name: "Good luck", type: "text", value: "Chúc bạn may mắn lần sau", probability: 0.14, color: "#ffffff" },
-        { id: 7, name: "Máy ảnh", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/3f8f5ad0-dcc1-4431-b3e7-271d3c990abd", probability: 0.0005, color: "#ef0012" },
-        { id: 8, name: "Thẻ cào", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/64ac9af8-24f1-4dc2-86f6-1923cef7e066", probability: 0.25, color: "#ffffff" }
-      ];
-      setPrizes(mockData);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mockData));
-      console.log("Loaded mock data and saved to Local Storage.");
-    }
+      if (savedPrizes) {
+        setPrizes(JSON.parse(savedPrizes));
+        console.log("Loaded prizes from Local Storage.");
+        return;
+      }
+
+      console.log("Local storage is empty. Fetching from API...");
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error(`API call failed with status: ${response.status}`);
+        }
+        const apiPrizes = await response.json();
+        setPrizes(apiPrizes);
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(apiPrizes));
+        console.log("Loaded prizes from API and saved to Local Storage.");
+      } catch (error) {
+        console.error("Failed to fetch from API, using mock data as fallback.", error);
+        // Dữ liệu mẫu nếu không có trong localStorage và API lỗi
+        const mockData = [
+          { id: 1, name: "Điện thoại", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/bda0db2f-f354-4a90-91c8-36ce183c4f38", probability: 0.0005, color: "#ef0012" },
+          { id: 2, name: "Good luck", type: "text", value: "Chúc bạn may mắn lần sau", probability: 0.14, color: "#ffffff" },
+          { id: 3, name: "Máy ảnh", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/3f8f5ad0-dcc1-4431-b3e7-271d3c990abd", probability: 0.0005, color: "#ef0012" },
+          { id: 4, name: "Thẻ cào", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/64ac9af8-24f1-4dc2-86f6-1923cef7e066", probability: 0.25, color: "#ffffff" },
+          { id: 5, name: "Điện thoại", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/bda0db2f-f354-4a90-91c8-36ce183c4f38", probability: 0.0005, color: "#ef0012" },
+          { id: 6, name: "Good luck", type: "text", value: "Chúc bạn may mắn lần sau", probability: 0.14, color: "#ffffff" },
+          { id: 7, name: "Máy ảnh", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/3f8f5ad0-dcc1-4431-b3e7-271d3c990abd", probability: 0.0005, color: "#ef0012" },
+          { id: 8, name: "Thẻ cào", type: "image", value: "https://s3dev.estuary.solutions/ovaltine2024dev/64ac9af8-24f1-4dc2-86f6-1923cef7e066", probability: 0.25, color: "#ffffff" }
+        ];
+        setPrizes(mockData);
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(mockData));
+        console.log("Loaded mock data and saved to Local Storage.");
+      }
+    };
+
+    loadPrizes();
   }, []);
 
   // Effect để quản lý class 'body-no-scroll' khi popup mở/đóng
