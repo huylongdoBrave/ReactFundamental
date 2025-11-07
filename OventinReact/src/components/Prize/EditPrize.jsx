@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function EditPrize() {
-const [prize, setPrize] = useState(null);
-useEffect(() => {},[]);
+function EditPrize(prize) {
 
 
 return (
