@@ -17,6 +17,7 @@ function RateTablePopup({ isOpen, prizes, onClose, onApplyChanges }) {
     return tempPrizes.reduce((sum, prize) => sum + (parseFloat(prize.probability) || 0), 0) * 100;
   }, [tempPrizes]);
 
+  // Cập nhật tỉ lệ quà
   const handlePrizeChange = (id, field, value) => {
     setTempPrizes(currentPrizes =>
       currentPrizes.map(p => {
@@ -30,12 +31,14 @@ function RateTablePopup({ isOpen, prizes, onClose, onApplyChanges }) {
     );
   };
 
+  // Xóa quà
   const handleDeletePrize = (id, name) => {
     if (window.confirm(`Bạn có chắc chắn muốn xóa quà "${name}" không?`)) {
       setTempPrizes(currentPrizes => currentPrizes.filter(p => p.id !== id));
     }
   };
 
+  // Cảnh báo sửa bị tràn tỉ lệ
   const handleApply = () => {
     if (totalProbability > 100.01) {
       alert(`Cảnh báo tỉ lệ đang ${totalProbability.toFixed(2)}% . Vui lòng chỉnh tổng dưới 100%`);
@@ -45,6 +48,8 @@ function RateTablePopup({ isOpen, prizes, onClose, onApplyChanges }) {
     onClose(); // Đóng popup
   };
 
+
+  
   if (!isOpen) {
     return null;
   }

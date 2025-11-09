@@ -32,8 +32,8 @@ function WheelGame() {
         console.log("Loaded prizes from Local Storage.");
         return;
       }
-
       console.log("Local storage is empty. Fetching from API...");
+      
       try {
         const response = await fetch(API_URL);
         if (!response.ok) {
@@ -76,6 +76,7 @@ function WheelGame() {
     return () => document.body.classList.remove('body-no-scroll');
   }, []);
 
+
   // === Tính bảo hiểm khi quay ===
   /*
      * Chọn một index (vị trí) của quà một cách ngẫu nhiên, có trọng số (dựa trên tỉ lệ).
@@ -88,7 +89,6 @@ function WheelGame() {
      * Điều này tương đương với việc chia một đoạn thẳng từ 0 đến 1 thành các đoạn nhỏ có độ dài bằng tỉ lệ,
      * và xem `rand` rơi vào đoạn nào.
      */
-
   const getWeightedRandomIndex = () => {
     // Lấy mảng tỉ lệ mới nhất từ RateManager. Ví dụ: [0.1, 0.7, 0.2].
     const prizeProbabilities = prizes.map(p => p.probability);
@@ -111,6 +111,7 @@ function WheelGame() {
     return prizeProbabilities.length - 1;
   };
 
+  
   // === Sự kiện quay ===
   const handleSpin = () => {
     if (isSpinning || currentSpins <= 0 || prizes.length === 0) return;

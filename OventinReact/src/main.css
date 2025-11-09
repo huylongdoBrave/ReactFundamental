@@ -1177,5 +1177,178 @@ footer {
 
 }
 
+/* --- Popup Prize Detail --- */
+#prize-detail-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1002;
+}
+
+#prize-detail-popup-box {
+    position: relative;
+    width: 90%;
+    max-width: 450px;
+    background-color: #fff;
+    border: 4px solid #f85a00;
+    border-radius: 15px;
+    padding: 20px;
+    color: #333;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+.prize-detail-title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #f85a00;
+}
+
+.prize-detail-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.prize-detail-image {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid #eee;
+}
+
+.prize-detail-text-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-style: italic;
+    color: #002d6f;
+    margin: 0;
+}
+
+.prize-detail-info {
+    width: 100%;
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.6;
+}
 
 
+.prize-detail-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
+.form-group-detail label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.form-group-detail input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group-color {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group-color input[type="text"] {
+    flex-grow: 1;
+}
+
+.color-picker-detail {
+    width: 40px;
+    height: 36px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.prize-detail-actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-delete-prize {
+    background-color: #dc3545; /* Màu đỏ cho nút xóa */
+}
+.btn-delete-prize:hover {
+    background-color: #c82333;
+}
+
+.prize-detail-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
+.form-group-detail label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.form-group-detail input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group-color {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group-color input[type="text"] {
+    flex-grow: 1;
+}
+
+.color-picker-detail {
+    width: 40px;
+    height: 36px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.prize-detail-actions {
+    margin-top: 25px;
+    text-align: center;
+}
