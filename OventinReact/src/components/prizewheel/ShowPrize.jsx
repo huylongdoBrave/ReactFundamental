@@ -45,7 +45,7 @@ function ShowPrize() {
     // Lọc ra các quà không bị xóa
     const updatedPrizes = prizes.filter(p => p.id !== prizeId);
     setPrizes(updatedPrizes);
-    localStorage.setItem('oventinPrizes', JSON.stringify(updatedPrizes)); // Lưu vào localStorage
+    localStorage.setItem('oventinPrizes', JSON.stringify(updatedPrizes)); // Lưu vào local
 
     handleClosePopup(); // Đóng popup
     alert('Đã xóa quà thành công!');
