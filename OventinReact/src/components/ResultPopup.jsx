@@ -16,6 +16,7 @@ function ResultPopup({ isOpen, prize, onClose }) {
         <img src="/static/boy.png" alt="Boy" className="side-image-popup" />
     </div>
   );
+  
 }
 
 export default ResultPopup;
